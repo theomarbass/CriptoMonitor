@@ -30,7 +30,7 @@ export class AppComponent {
   constructor() {
     this.initWorker();
     this.startPriceSimulation();
-    
+
     // Enviar datos al Web Worker automáticamente cuando cambien los precios
     effect(() => {
       const pList = this.prices().map(p => p.price);
@@ -48,7 +48,7 @@ export class AppComponent {
 
   initWorker() {
     if (typeof Worker !== 'undefined') {
-      // Asegúrate que el archivo se llame exactamente statistics.worker.ts en tu carpeta
+      // Integración con web worker, carpeta llamada statistics.worker.ts
       this.worker = new Worker(new URL('./statistics.worker', import.meta.url));
       this.worker.onmessage = ({ data }) => {
         if (data) this.stats.set(data);
@@ -65,6 +65,6 @@ export class AppComponent {
         const trend = newPrice > p.price ? 'up' : 'down';
         return { ...p, price: newPrice, trend: trend };
       }));
-    }, 200); 
+    }, 200);
   }
 }
